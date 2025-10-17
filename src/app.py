@@ -6,10 +6,10 @@ import os
 import random
 
 # -------------------------------
-# File paths (inside src/)
+# File paths
 # -------------------------------
-VECTOR_FILE = "src/vectorizer.pkl"
-MODEL_FILE = "src/spam_model.pkl"
+VECTOR_FILE = "vectorizer.pkl"
+MODEL_FILE = "spam_model.pkl"
 
 # -------------------------------
 # Check if files exist
@@ -45,7 +45,7 @@ def preprocess_text(text):
 def predict_message(message):
     clean_msg = preprocess_text(message)
     vectorized_msg = vectorizer.transform([clean_msg])
-    prediction = model.predict(vectorized_msg)[0]
+    prediction = model.predict(vectorized_msg)[0]  # numeric: 0 or 1
     return prediction
 
 # -------------------------------
@@ -60,7 +60,7 @@ examples = [
 ]
 
 # -------------------------------
-# Streamlit setup
+# Streamlit app setup
 # -------------------------------
 st.set_page_config(
     page_title="📧 Spam Classifier",
@@ -68,7 +68,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# Custom CSS for background and title
+# Custom CSS
 st.markdown(
     """
     <style>
@@ -91,6 +91,9 @@ st.markdown(
         color: white;
         margin-top: 20px;
     }
+    .example-button {
+        margin: 5px;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -101,6 +104,15 @@ st.markdown(
 # -------------------------------
 st.markdown('<h1 class="title">📧 Spam Classifier</h1>', unsafe_allow_html=True)
 st.subheader("Detect whether a message is Spam or Not Spam")
+
+# -------------------------------
+# Initialize session state
+# -------------------------------
+if 'message' not in st.session_state:
+    st.session_state['message'] = ""
+
+if 'history' not in st.session_state:
+    st.session_state['history'] = []
 
 # -------------------------------
 # Sidebar with instructions & examples
@@ -117,14 +129,7 @@ for msg in examples:
 # -------------------------------
 # Text input area
 # -------------------------------
-if 'message' not in st.session_state:
-    st.session_state['message'] = ""
-
-message = st.text_area(
-    "Enter your message here:", 
-    value=st.session_state.get('message', ''), 
-    height=120
-)
+message = st.text_area("Enter your message here:", value=st.session_state.get('message', ''), height=120)
 
 # -------------------------------
 # Random suggestion button
@@ -140,12 +145,30 @@ if st.button("Predict"):
     if message.strip() == "":
         st.warning("⚠️ Please enter a message to predict.")
     else:
-        result = predict_message(message)
-        color = "#FF4B4B" if result.lower() == "spam" else "#28A745"
+        # Make prediction
+        result_numeric = predict_message(message)
+        label_map = {0: "ham", 1: "spam"}
+        result_label = label_map.get(result_numeric, "Unknown")
+
+        # Add to history
+        st.session_state['history'].insert(0, message)
+        if len(st.session_state['history']) > 5:
+            st.session_state['history'] = st.session_state['history'][:5]
+
+        # Display result
+        color = "#FF4B4B" if result_label.lower() == "spam" else "#28A745"
         st.markdown(
-            f'<div class="prediction-box" style="background-color:{color}">Prediction: {result}</div>',
+            f'<div class="prediction-box" style="background-color:{color}">Prediction: {result_label}</div>',
             unsafe_allow_html=True
         )
+
+# -------------------------------
+# Show last 5 messages
+# -------------------------------
+if st.session_state['history']:
+    st.markdown("### 🔄 Last 5 Messages Tried")
+    for i, msg in enumerate(st.session_state['history'], 1):
+        st.write(f"{i}. {msg}")
 
 # -------------------------------
 # Footer
