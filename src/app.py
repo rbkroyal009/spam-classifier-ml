@@ -6,7 +6,7 @@ import os
 import random
 
 # -------------------------------
-# File paths
+# File paths (must be in same folder as app.py)
 # -------------------------------
 VECTOR_FILE = "vectorizer.pkl"
 MODEL_FILE = "spam_model.pkl"
@@ -34,7 +34,7 @@ with open(MODEL_FILE, "rb") as f:
 # Preprocessing function
 # -------------------------------
 def preprocess_text(text):
-    text = text.lower()
+    text = str(text).lower()
     text = re.sub(r'\W', ' ', text)
     text = re.sub(r'\s+', ' ', text)
     return text.strip()
@@ -45,8 +45,8 @@ def preprocess_text(text):
 def predict_message(message):
     clean_msg = preprocess_text(message)
     vectorized_msg = vectorizer.transform([clean_msg])
-    prediction = model.predict(vectorized_msg)[0]  # numeric: 0 or 1
-    return prediction
+    prediction = model.predict(vectorized_msg)[0]
+    return str(prediction)
 
 # -------------------------------
 # Random message suggestions
@@ -58,6 +58,15 @@ examples = [
     "Can you call me back later?",
     "You have been selected for a $1000 gift card"
 ]
+
+# -------------------------------
+# Session state for history
+# -------------------------------
+if 'history' not in st.session_state:
+    st.session_state['history'] = []
+
+if 'message' not in st.session_state:
+    st.session_state['message'] = ""
 
 # -------------------------------
 # Streamlit app setup
@@ -83,7 +92,7 @@ st.markdown(
         text-align: center;
     }
     .prediction-box {
-        padding: 25px;
+        padding: 20px;
         border-radius: 15px;
         font-size: 28px;
         font-weight: bold;
@@ -106,15 +115,6 @@ st.markdown('<h1 class="title">📧 Spam Classifier</h1>', unsafe_allow_html=Tru
 st.subheader("Detect whether a message is Spam or Not Spam")
 
 # -------------------------------
-# Initialize session state
-# -------------------------------
-if 'message' not in st.session_state:
-    st.session_state['message'] = ""
-
-if 'history' not in st.session_state:
-    st.session_state['history'] = []
-
-# -------------------------------
 # Sidebar with instructions & examples
 # -------------------------------
 st.sidebar.header("Instructions")
@@ -129,7 +129,11 @@ for msg in examples:
 # -------------------------------
 # Text input area
 # -------------------------------
-message = st.text_area("Enter your message here:", value=st.session_state.get('message', ''), height=120)
+message = st.text_area(
+    "Enter your message here:", 
+    value=st.session_state.get('message', ''), 
+    height=120
+)
 
 # -------------------------------
 # Random suggestion button
@@ -145,30 +149,25 @@ if st.button("Predict"):
     if message.strip() == "":
         st.warning("⚠️ Please enter a message to predict.")
     else:
-        # Make prediction
-        result_numeric = predict_message(message)
-        label_map = {0: "ham", 1: "spam"}
-        result_label = label_map.get(result_numeric, "Unknown")
-
-        # Add to history
-        st.session_state['history'].insert(0, message)
+        result = predict_message(message)
+        # store in history
+        st.session_state['history'].insert(0, f"{message} ➜ {result}")
         if len(st.session_state['history']) > 5:
             st.session_state['history'] = st.session_state['history'][:5]
 
-        # Display result
-        color = "#FF4B4B" if result_label.lower() == "spam" else "#28A745"
+        color = "#FF4B4B" if str(result).lower() == "spam" else "#28A745"
         st.markdown(
-            f'<div class="prediction-box" style="background-color:{color}">Prediction: {result_label}</div>',
+            f'<div class="prediction-box" style="background-color:{color}">Prediction: {result}</div>',
             unsafe_allow_html=True
         )
 
 # -------------------------------
-# Show last 5 messages
+# Display last 5 predictions
 # -------------------------------
 if st.session_state['history']:
-    st.markdown("### 🔄 Last 5 Messages Tried")
-    for i, msg in enumerate(st.session_state['history'], 1):
-        st.write(f"{i}. {msg}")
+    st.markdown("### Last 5 Predictions")
+    for h in st.session_state['history']:
+        st.write(h)
 
 # -------------------------------
 # Footer
