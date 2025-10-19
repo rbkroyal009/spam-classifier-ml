@@ -53,6 +53,7 @@ pandas, numpy
 scikit-learn (for TF-IDF & Naive Bayes)
 
 Streamlit (for web app)
+
 =======
 # Spam Classifier ML Project
 
@@ -89,5 +90,8 @@ pip install streamlit
 
 ##Run the Streamlit app:
 streamlit run app.py
+
+
+click to run:http://192.168.1.7:8501
 
 >>>>>>> 96e3923 (Add model, vectorizer, app.py and update README)
