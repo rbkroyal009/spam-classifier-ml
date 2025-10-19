@@ -1,51 +1,101 @@
-<<<<<<< HEAD
-# Spam Classifier ML Project
+📧 Spam Classifier ML Project
 
-A **Machine Learning Spam Classifier** that detects whether a text message is spam or not.  
-Built with **Python**, **scikit-learn**, and **Streamlit** for an interactive web interface.
+A Machine Learning project that detects whether a text message is Spam or Not Spam using a Naive Bayes classifier. Built with Python, scikit-learn, and Streamlit for an interactive web interface.
 
-## 🔹 Features
+🚀 Live Demo
 
-- Preprocess text messages using **TF-IDF vectorization**
-- Train and test **Naive Bayes classifier**
-- Save trained model and vectorizer for reuse
-- Interactive **Streamlit web app** for real-time prediction
-- Fully portable and accessible from any device
----
-## live link of web
-http://192.168.1.7:8501
----
+You can try the app live locally on your network: 
+   http://192.168.1.7:8501
+   
+🔹 Features
 
-## 🔹 Folder Structure
-spam-classifier-ml/
-├── data/
-│ └── spam.csv # Dataset
-├── src/
-│ ├── preprocess.py # Text preprocessing
-│ ├── model.py # Model training
-│ ├── predict.py # Test predictions
-│ └── app.py # Streamlit app
-├── requirements.txt # Required Python packages
-└── README.md # Project documentation
+ -->Text preprocessing with TF-IDF vectorization
+ 
+ -->Naive Bayes classifier trained for spam detection
+ 
+ -->Save and reuse trained model and vectorizer (.joblib)
+ 
+ -->Interactive Streamlit web app for real-time prediction
+ 
+ -->Random message suggestions for testing
+ 
+ -->Keeps last 5 messages for quick access
+ 
+ -->Fully portable and accessible on any device
 
+ 🧰 Tech Stack
+ 
+-->Python – Core language
 
-## How to Run
-1. Clone the repo:
-```bash
-git clone https://github.com/<your-username>/spam-classifier-ml.git
-cd spam-classifier-ml/src
+-->scikit-learn – ML model & vectorizer
 
-##Install packages:
-pip install -r ../requirements.txt
-pip install streamlit
+-->pandas / numpy – Data handling
 
-##Run the Streamlit app:
+-->Streamlit – Web app interface
+
+-->joblib – Model & vectorizer persistence
+
+📂 Project Structure
+
+Folders:
+
+  data/ – Contains the dataset (spam.csv)
+  
+  src/ – Source code for the project
+
+  preprocess.py – Text preprocessing functions
+
+  model.py – Model training script
+
+  predict.py – Script for testing predictions
+  
+  app.py – Streamlit web app
+  
+Files:
+
+  spam_model.joblib – Trained Naive Bayes model
+  
+  vectorizer.joblib – Saved TF-IDF vectorizer
+
+  requirements.txt – Required Python packages
+
+  README.md – Project documentation
+
+⚡ Run the App
 streamlit run app.py
 
+ ## 📸 Screenshots
+
+**Home Screen**  
+![Home Screen](screenshots/home.png)  
+
+**Spam Prediction Example**  
+![Spam Prediction](screenshots/spam_prediction.png)  
+
+**Ham Prediction Example**  
+![Ham Prediction](screenshots/ham_prediction.png)  
 
 
-click to run:http://192.168.1.7:8501
 
->>>>>>> 96e3923 (Add model, vectorizer, app.py and update README)
+📈 How It Works
 
+Text Preprocessing:
 
+Lowercase conversion
+
+Remove special characters
+
+Remove extra spaces
+
+TF-IDF Vectorization:
+
+Converts text messages into numerical features.
+
+Prediction:
+
+Naive Bayes classifier predicts spam or ham
+
+Display result in color-coded box (Red = Spam, Green = Not Spam)
+
+💡 Made By
+Bharath Kumar Ramisetti
