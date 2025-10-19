@@ -67,15 +67,16 @@ streamlit run app.py
  ## 📸 Screenshots
 
 **Home Screen**  
-![Home Screen](screenshots/home.png)  
+<img width="1920" height="1080" alt="home" src="https://github.com/user-attachments/assets/17e39835-295b-4a41-9d72-2d0f70f85a7d" />
+
 
 **Spam Prediction Example**  
-![Spam Prediction](screenshots/spam_prediction.png)  
+
+<img width="1920" height="1080" alt="spam_prediction png" src="https://github.com/user-attachments/assets/b35c62ac-9221-459c-be5b-2c61d0232448" />
 
 **Ham Prediction Example**  
-![Ham Prediction](screenshots/ham_prediction.png)  
 
-
+<img width="1920" height="1080" alt="ham_prediction" src="https://github.com/user-attachments/assets/84e30eb6-54d0-4552-b824-f71cec54e98e" />
 
 📈 How It Works
 
@@ -99,3 +100,4 @@ Display result in color-coded box (Red = Spam, Green = Not Spam)
 
 💡 Made By
 Bharath Kumar Ramisetti
+
