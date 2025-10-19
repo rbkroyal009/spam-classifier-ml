@@ -1,31 +1,28 @@
 # model.py
 import pandas as pd
-from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import MultinomialNB
-import pickle
+import joblib
 
-# Load CSV (adjust path if needed)
-df = pd.read_csv("../data/spam.csv", encoding='latin-1')  # use 'latin-1' to avoid decode errors
-df = df[['text', 'label']]  # select proper columns
+# Load dataset
+df = pd.read_csv("../data/spam.csv", encoding="latin-1")
+df = df[['v2', 'v1']]
+df.columns = ['text', 'label']
 
-# Train-test split
+# Split
 X_train, X_test, y_train, y_test = train_test_split(df['text'], df['label'], test_size=0.2, random_state=42)
 
-# Vectorize
+# Vectorizer
 vectorizer = TfidfVectorizer()
 X_train_vec = vectorizer.fit_transform(X_train)
-X_test_vec = vectorizer.transform(X_test)
 
-# Train model
+# Model
 model = MultinomialNB()
 model.fit(X_train_vec, y_train)
 
-# Save pickles in src folder
-with open("spam_model.pkl", "wb") as f:
-    pickle.dump(model, f)
+# Save vectorizer and model using joblib
+joblib.dump(vectorizer, "vectorizer.joblib")
+joblib.dump(model, "spam_model.joblib")
 
-with open("vectorizer.pkl", "wb") as f:
-    pickle.dump(vectorizer, f)
-
-print("✅ Model and vectorizer saved successfully in src folder!")
+print("✅ Model and vectorizer saved successfully with joblib!")
