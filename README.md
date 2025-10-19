@@ -29,55 +29,6 @@ spam-classifier-ml/
 └── README.md # Project documentation
 
 
----
-
-## 🔹 Installation & Usage
-
-### 1️⃣ Clone the repository
-```bash
-git clone https://github.com/rbkroyal009/spam-classifier-ml.git
-cd spam-classifier-ml/src
-
-##installations
-pip install -r ../requirements.txt
-pip install streamlit
-
-##run 
-streamlit run app.py
-🔹 Technologies Used
-
-Python 3.x
-
-pandas, numpy
-
-scikit-learn (for TF-IDF & Naive Bayes)
-
-Streamlit (for web app)
-
-=======
-# Spam Classifier ML Project
-
-Detects whether a text message is spam or not using Machine Learning and Streamlit.
-
-## Features
-- Preprocessing with TF-IDF
-- Naive Bayes model
-- Streamlit web app interface
-- Fully portable and accessible from any device
-
-## Folder Structure
-spam-classifier-ml/
-├── data/
-│ └── spam.csv
-├── src/
-│ ├── preprocess.py
-│ ├── model.py
-│ ├── predict.py
-│ └── app.py
-├── requirements.txt
-└── README.md
-
-
 ## How to Run
 1. Clone the repo:
 ```bash
@@ -95,3 +46,4 @@ streamlit run app.py
 click to run:http://192.168.1.7:8501
 
 >>>>>>> 96e3923 (Add model, vectorizer, app.py and update README)
+
