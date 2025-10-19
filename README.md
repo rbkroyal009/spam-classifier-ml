@@ -5,7 +5,7 @@ A Machine Learning project that detects whether a text message is Spam or Not Sp
 🚀 Live Demo
 
 You can try the app live locally on your network: 
-   http://192.168.1.7:8501
+   http://172.20.10.5:8501
    
 🔹 Features
 
@@ -100,4 +100,5 @@ Display result in color-coded box (Red = Spam, Green = Not Spam)
 
 💡 Made By
 Bharath Kumar Ramisetti
+
 
