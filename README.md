@@ -4,8 +4,6 @@
 A **Machine Learning Spam Classifier** that detects whether a text message is spam or not.  
 Built with **Python**, **scikit-learn**, and **Streamlit** for an interactive web interface.
 
----
-
 ## 🔹 Features
 
 - Preprocess text messages using **TF-IDF vectorization**
@@ -13,7 +11,9 @@ Built with **Python**, **scikit-learn**, and **Streamlit** for an interactive we
 - Save trained model and vectorizer for reuse
 - Interactive **Streamlit web app** for real-time prediction
 - Fully portable and accessible from any device
-
+---
+## live link of web
+http://192.168.1.7:8501
 ---
 
 ## 🔹 Folder Structure
@@ -43,7 +43,9 @@ pip install streamlit
 streamlit run app.py
 
 
+
 click to run:http://192.168.1.7:8501
 
 >>>>>>> 96e3923 (Add model, vectorizer, app.py and update README)
+
 
